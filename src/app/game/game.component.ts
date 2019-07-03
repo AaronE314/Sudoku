@@ -22,13 +22,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
 
-    // for (let i = 0; i < 9; i++) {
-    //   this.grid.push([]);
-    //   for (let j = 0; j < 9; j++) {
-    //     this.grid[i].push(j);
-    //   }
-    // }
-
   }
 
 }

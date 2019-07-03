@@ -9,9 +9,15 @@ export class CellComponent implements OnInit {
 
   @Input() value: number;
 
+  selected: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  clickCell(): void {
+    this.selected = !this.selected;
   }
 
 }

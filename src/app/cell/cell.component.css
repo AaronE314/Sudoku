@@ -9,6 +9,14 @@ div.cell {
     background-color: #ffffff;
 }
 
+div.selected {
+    color: #607D8B;
+    border: 2px solid green;
+    height: 46px;
+    width: 46px;
+    background-color: rgb(235, 235, 235);
+}
+
 div.cell:hover {
     color: #607D8B;
     background-color: rgb(235, 235, 235);
@@ -21,4 +29,13 @@ p {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
