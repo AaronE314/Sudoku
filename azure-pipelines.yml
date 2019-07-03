@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install -g @angular/cli
+    npm install -g @angular/cli@8.0.6
     npm install -g angular-cli-ghpages
     npm install
     ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
