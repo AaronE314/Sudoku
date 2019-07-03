@@ -1,0 +1,11 @@
+
+
+<div *ngIf='grid'>
+    <table align='center'>
+        <tr *ngFor="let i of grid">
+            <td *ngFor="let j of i">
+                <app-cell [value]=j></app-cell>
+            </td>
+        </tr>
+    </table>
+</div>
