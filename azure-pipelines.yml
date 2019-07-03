@@ -17,6 +17,8 @@ steps:
 
 - script: |
     npm install -g @angular/cli
+    npm install -g angular-cli-ghpages
     npm install
-    ng build --prod
-  displayName: 'npm install and build'
+    ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
+    ngh
+  displayName: 'Build for Prod'
