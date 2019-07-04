@@ -11,7 +11,7 @@ export class GameComponent implements OnInit {
 
   grid: Cell[][] = [];
 
-  constructor (private puzzleService: PuzzleService) { }
+  constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit() {
 
