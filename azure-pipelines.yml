@@ -20,5 +20,8 @@ steps:
     npm install -g angular-cli-ghpages
     npm install
     ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
+    git config --global user.name "Aaron Exley"
+    git config -global user.email "aaroned314@gmail.com"
     ngh --dir dist/sudoku -S
   displayName: 'Build for Prod'
+
