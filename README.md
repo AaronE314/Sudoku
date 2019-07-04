@@ -1,8 +1,9 @@
+[![Build Status](https://dev.azure.com/aaronde314/aaronde314/_apis/build/status/AaronE314.Sudoku?branchName=master)](https://dev.azure.com/aaronde314/aaronde314/_build/latest?definitionId=1&branchName=master)
+
 # Sudoku
 
 This project was used to help me learn angular. 
 
-[![Build Status](https://dev.azure.com/aaronde314/aaronde314/_apis/build/status/AaronE314.Sudoku?branchName=master)](https://dev.azure.com/aaronde314/aaronde314/_build/latest?definitionId=1&branchName=master)
 
 ## Development server
 
