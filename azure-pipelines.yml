@@ -33,8 +33,8 @@ steps:
   displayName: 'build for prod'
 
 - script: |
-    git config --local user.name "Aaron Exley"
-    git config --local user.email "aaronde314@gmail.com"
+    git config --global user.name "Aaron Exley"
+    git config --global7 user.email "aaronde314@gmail.com"
     ngh --dir dist/sudoku -S
   displayName: '"deploy to GitHub Pages'
   condition: |
