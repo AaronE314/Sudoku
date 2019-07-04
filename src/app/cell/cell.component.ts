@@ -17,7 +17,7 @@ export class CellComponent implements OnInit {
   }
 
   clickCell(): void {
-    this.puzzleService.updateCellSelected(this.cell.i, this.cell.j, true);
+    this.puzzleService.updateCellSelected(this.cell.i, this.cell.j, (this.cell.default) ? !this.cell.selected : true );
   }
 
 }

@@ -95,13 +95,26 @@ export class PuzzleService {
 
   updateCellSelected(i: number, j: number, selected: boolean): void {
 
-    for (let i = 0; i < this.puzzle.length; i++) {
-      for (let j = 0; j < this.puzzle[i].length; j++) {
-        this.puzzle[i][j].selected = false;
+    for (let k = 0; k < this.puzzle.length; k++) {
+      for (let l = 0; l < this.puzzle[k].length; l++) {
+        this.puzzle[k][l].selected = false;
       }
     }
 
-    this.puzzle[i][j].selected = selected;
+    if (this.puzzle[i][j].default) {
+      for (let k = 0; k < this.puzzle.length; k++) {
+        for (let l = 0; l < this.puzzle[k].length; l++) {
+          if (this.puzzle[k][l].value !== 0 && this.puzzle[k][l].value === this.puzzle[i][j].value) {
+            this.puzzle[k][l].selected = true;
+          }
+          
+        }
+      }
+  
+    } else {
+      this.puzzle[i][j].selected = selected;
+    }
+    
     
   }
 
