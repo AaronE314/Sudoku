@@ -10,6 +10,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
+- task: InstallSSHKey@0
+  inputs:
+    knownHostsEntry: 'github.com,192.30.253.113 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+    sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDinG+2qzDefibBZwhGrrw/L757p3gVp/Y2t2enhalnk/TPxQ73kJxPV7dHI9npBF2P6gR8PbWCGNnXv/ZJVbGf+htyi9ZuWNAOxN+MZk7s3B5eNechHRkUx69ISXdWB0jUOzcg5KUQxPsh3YP3kIyeLnfJw/W/H+727Wgho1gwr/n+41cxmQ5PXw8qDZegsqX8+Wtq27q2MGcfhlK4MhMJ8OJ0hgrqIFeiTJ8wcIQaVJ8q63K4y481Nhs0khptLS9ST5QHbxzJfy5Un4zv//bePJpZWrOCSNCkiIo19DcCQDvlotu4Zj3Zmp3J/5xjkmo5Z3SPRCz66D8R9ST/IL+7 minec@AaronsBetterDesktop'
+    sshKeySecureFile: 'azureKey'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
@@ -19,9 +26,16 @@ steps:
     npm install -g @angular/cli@8.0.6
     npm install -g angular-cli-ghpages
     npm install
-    ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
-    git config --global user.name "Aaron Exley"
-    git config -global user.email "aaroned314@gmail.com"
-    ngh --dir dist/sudoku -S
-  displayName: 'Build for Prod'
+  displayName: 'npm install'
 
+- script: |
+    ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
+  displayName: 'build for prod'
+
+- script: |
+    git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+    ngh --dir dist/sudoku -S --name "Aaron Exley" --email "aaronde314@gmail.com"
+  displayName: '"deploy to GitHub Pages'
+  condition: |
+    and(not(eq(variables['Build.Reason'], 'PullRequest')),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'))
