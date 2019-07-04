@@ -10,11 +10,17 @@ div.cell {
 }
 
 div.selected {
-    color: #607D8B;
     border: 2px solid green;
     height: 46px;
     width: 46px;
     background-color: rgb(235, 235, 235);
+}
+
+div.ghost_selected {
+    border: 2px solid rgba(0, 128, 0, 0.4);
+    height: 46px;
+    width: 46px;
+    background-color: #ffffff;
 }
 
 div.cell:hover {
@@ -29,7 +35,8 @@ td.notesgridCell {
     margin: 0px;
 }
 
-div.selected table.notesgrid {
+div.selected table.notesgrid,
+div.ghost_selected table.notesgrid {
     transform: translate(-2px, -2px);
 }
 

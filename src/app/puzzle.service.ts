@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cell } from './cell';
+import { Cell, HighlightLevel } from './cell';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
@@ -64,7 +64,7 @@ export class PuzzleService {
           value: (puzzleString[0][i * 9 + j] === '.') ? 0 : +puzzleString[0][i * 9 + j],
           notes: createNotes(),
           default: (puzzleString[0][i * 9 + j] === '.' ? false : true),
-          selected: false
+          selected: HighlightLevel.NO_HIGHLIGHT
         });
         this.solution[i].push({
           i,
@@ -72,7 +72,7 @@ export class PuzzleService {
           value: +puzzleString[1][i * 9 + j],
           notes: createNotes(),
           default: true,
-          selected: false
+          selected: HighlightLevel.NO_HIGHLIGHT
         });
       }
     }
@@ -82,7 +82,7 @@ export class PuzzleService {
     for (const row of this.puzzle) {
       for (const cell of row) {
 
-        if (!cell.default && cell.selected) {
+        if (!cell.default && cell.selected === HighlightLevel.SELECTED) {
           return cell;
         }
 
@@ -104,6 +104,8 @@ export class PuzzleService {
 
     if (cell) {
       cell.value = (value === cell.value) ? 0 : value;
+
+      this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 
   }
@@ -116,6 +118,8 @@ export class PuzzleService {
       value -= 1;
 
       cell.notes[Math.floor(value / 3)][value % 3] = !cell.notes[Math.floor(value / 3)][value % 3];
+
+      this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 
   }
@@ -127,19 +131,22 @@ export class PuzzleService {
     this.puzzle[i][j].notes = notes;
   }
 
-  updateCellSelected(i: number, j: number, selected: boolean): void {
+  updateCellSelected(i: number, j: number, selected: HighlightLevel): void {
 
     for (const row of this.puzzle) {
       for (const cell of row) {
-        cell.selected = false;
+        cell.selected = HighlightLevel.NO_HIGHLIGHT;
       }
     }
 
-    if (this.puzzle[i][j].default) {
+    if (this.puzzle[i][j].value !== 0) {
       for (const row of this.puzzle) {
         for (const cell of row) {
-          if (cell.value !== 0 && cell.value === this.puzzle[i][j].value) {
+          const value = this.puzzle[i][j].value;
+          if (cell.value !== 0 && cell.value === value) {
             cell.selected = selected;
+          } else if (cell.value === 0 && cell.notes[Math.floor((value - 1) / 3)][(value - 1) % 3]) {
+            cell.selected = HighlightLevel.GHOST_SELECTED;
           }
 
         }

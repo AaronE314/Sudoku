@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PuzzleService } from '../puzzle.service';
-import { Cell } from '../cell';
+import { Cell, HighlightLevel, notHighlight } from '../cell';
 
 @Component({
   selector: 'app-cell',
@@ -16,8 +16,13 @@ export class CellComponent implements OnInit {
   ngOnInit() {
   }
 
+  highlightLevel() {
+    return HighlightLevel;
+  }
+
   clickCell(): void {
-    this.puzzleService.updateCellSelected(this.cell.i, this.cell.j, (this.cell.default) ? !this.cell.selected : true );
+    this.puzzleService.updateCellSelected(this.cell.i, this.cell.j,
+      (this.cell.value !== 0) ? notHighlight(this.cell.selected) : HighlightLevel.SELECTED );
   }
 
 }

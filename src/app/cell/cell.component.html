@@ -1,5 +1,7 @@
 
-<div class="cell" (click)="clickCell()" [ngClass]="cell.selected ? 'selected' : ''">
+<div class="cell" (click)="clickCell()" 
+    [ngClass]="{selected: cell.selected === highlightLevel().SELECTED,
+        ghost_selected: cell.selected === highlightLevel().GHOST_SELECTED}">
 
     <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>
     <table class="notesgrid" *ngIf="cell.value === 0">
