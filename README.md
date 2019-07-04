@@ -1,8 +1,8 @@
+[![Build Status](https://dev.azure.com/aaronde314/aaronde314/_apis/build/status/AaronE314.Sudoku?branchName=master)](https://dev.azure.com/aaronde314/aaronde314/_build/latest?definitionId=1&branchName=master)
+
 # Sudoku
 
 This project was used to help me learn angular. 
-
-[![Build Status](https://dev.azure.com/aaronde314/aaronde314/_apis/build/status/AaronE314.Sudoku?branchName=master)](https://dev.azure.com/aaronde314/aaronde314/_build/latest?definitionId=1&branchName=master)
 
 ## Development server
 
@@ -19,7 +19,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
