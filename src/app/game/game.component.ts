@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PuzzleService } from '../puzzle.service';
-import { Cell } from '../cell';
 
 @Component({
   selector: 'app-game',
@@ -9,15 +7,10 @@ import { Cell } from '../cell';
 })
 export class GameComponent implements OnInit {
 
-  grid: Cell[][] = [];
-
-  constructor(private puzzleService: PuzzleService) { }
+  constructor() { }
 
   ngOnInit() {
 
-    this.puzzleService.loadPuzzle();
-
-    this.grid = this.puzzleService.getPuzzle();
 
   }
 

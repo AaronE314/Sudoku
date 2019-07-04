@@ -3,7 +3,6 @@ import { Cell } from './cell';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,12 +42,17 @@ export class PuzzleService {
 
     const puzzleString: string[] = puzzleText.split(',');
 
-    const notes: boolean[] = [];
-    for (let i = 0; i < 9; i++) {
-      notes.push(false);
-    }
+    const createNotes = (): boolean[][] => {
+      const notes: boolean[][] = [];
+      for (let i = 0; i < 3; i++) {
+        notes.push([]);
+        for (let j = 0; j < 3; j++) {
+          notes[i].push(false);
+        }
+      }
+      return notes;
+    };
 
-    console.log(puzzleString);
 
     for (let i = 0; i < 9; i++) {
       this.puzzle.push([]);
@@ -58,7 +62,7 @@ export class PuzzleService {
           i,
           j,
           value: (puzzleString[0][i * 9 + j] === '.') ? 0 : +puzzleString[0][i * 9 + j],
-          notes,
+          notes: createNotes(),
           default: (puzzleString[0][i * 9 + j] === '.' ? false : true),
           selected: false
         });
@@ -66,15 +70,24 @@ export class PuzzleService {
           i,
           j,
           value: +puzzleString[1][i * 9 + j],
-          notes,
+          notes: createNotes(),
           default: true,
           selected: false
         });
       }
     }
+  }
 
-    console.log(this.puzzle);
-    console.log(this.solution);
+  getSelected(): Cell {
+    for (const row of this.puzzle) {
+      for (const cell of row) {
+
+        if (!cell.default && cell.selected) {
+          return cell;
+        }
+
+      }
+    }
   }
 
   getPuzzle(): Cell[][] {
@@ -85,11 +98,32 @@ export class PuzzleService {
     return this.solution;
   }
 
+  updateSelectedValue(value: number) {
+
+    const cell = this.getSelected();
+
+    if (cell) {
+      cell.value = (value === cell.value) ? 0 : value;
+    }
+
+  }
+
+  toggleNoteToSelectedCell(value: number) {
+
+    const cell = this.getSelected();
+
+    if (cell) {
+      value -= 1;
+
+      cell.notes[Math.floor(value / 3)][value % 3] = !cell.notes[Math.floor(value / 3)][value % 3];
+    }
+
+  }
   updateCellValue(i: number, j: number, value: number): void {
     this.puzzle[i][j].value = value;
   }
 
-  updateCellNotes(i: number, j: number, notes: boolean[]): void {
+  updateCellNotes(i: number, j: number, notes: boolean[][]): void {
     this.puzzle[i][j].notes = notes;
   }
 

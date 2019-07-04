@@ -1,0 +1,24 @@
+
+
+<div >
+
+    <table align="center">
+        <tr>
+            <td *ngFor="let button of buttons">
+                <div class="button" (click)="clickButton(button)" 
+                [ngClass]="{notes: notes, 
+                    selected: puzzleService.getSelected() && 
+                    (notes && getNote(button)
+                    || !notes && puzzleService.getSelected().value === button)}">
+                    <p class="unselectable" >{{ button }}</p>
+                </div>
+            </td>
+            <td>
+                <div class='image unselectable' (click)="toggleNotes()" [ngClass]="notes ? 'selected': ''">
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+</div>

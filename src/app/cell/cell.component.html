@@ -1,4 +1,10 @@
 
 <div class="cell" (click)="clickCell()" [ngClass]="cell.selected ? 'selected' : ''">
-  <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>
+
+    <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>
+    <table class="notesgrid" *ngIf="cell.value === 0">
+        <tr *ngFor="let row of cell.notes; let i = index" [attr.data-index] = 'i'>
+            <td class="notesgridCell" *ngFor="let note of row; let j = index" [attr.data-index] = 'j'>{{(note) ? (i * 3) + j + 1 : ' '}}</td>
+        </tr>
+    </table>
 </div>

@@ -1,11 +1,5 @@
 
 
-<div *ngIf='grid'>
-    <table align='center'>
-        <tr *ngFor="let row of grid">
-            <td *ngFor="let cell of row">
-                <app-cell [cell]=cell></app-cell>
-            </td>
-        </tr>
-    </table>
-</div>
+
+<app-board></app-board>
+<app-buttons align='center'></app-buttons>
