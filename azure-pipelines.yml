@@ -32,10 +32,10 @@ steps:
     ng build --prod --base-href "https://aarone314.github.io/Sudoku/"
   displayName: 'build for prod'
 
+#    git config --global user.name "Aaron Exley"
+# git config --global7 user.email "aaronde314@gmail.com"
 - script: |
-    git config --global user.name "Aaron Exley"
-    git config --global7 user.email "aaronde314@gmail.com"
-    ngh --dir dist/sudoku -S
+    ngh --dir dist/sudoku -S --name "Aaron Exley" --email "aaronde314@gmail.com"
   displayName: '"deploy to GitHub Pages'
   condition: |
     and(not(eq(variables['Build.Reason'], 'PullRequest')),
