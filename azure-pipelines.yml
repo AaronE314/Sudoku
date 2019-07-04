@@ -33,8 +33,8 @@ steps:
   displayName: 'build for prod'
 
 - script: |
-    chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
-    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    git config --local user.name "Aaron Exley"
+    git config --local user.email "aaronde314@gmail.com"
     ngh --dir dist/sudoku -S
   displayName: '"deploy to GitHub Pages'
   condition: |
