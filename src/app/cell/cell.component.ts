@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PuzzleService } from '../puzzle.service';
+import { Cell } from '../cell';
 
 @Component({
   selector: 'app-cell',
@@ -7,17 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CellComponent implements OnInit {
 
-  @Input() value: number;
+  @Input() cell: Cell;
 
-  selected: boolean = false;
-
-  constructor() { }
+  constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit() {
   }
 
   clickCell(): void {
-    this.selected = !this.selected;
+    this.puzzleService.updateCellSelected(this.cell.i, this.cell.j, true);
   }
 
 }

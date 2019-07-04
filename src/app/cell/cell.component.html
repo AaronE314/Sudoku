@@ -1,4 +1,4 @@
 
-<div class="cell" (click)="clickCell()" [ngClass]="selected ? 'selected' : ''">
-  <p class="unselectable" *ngIf="value !== 0">{{ value }}</p>
+<div class="cell" (click)="clickCell()" [ngClass]="cell.selected ? 'selected' : ''">
+  <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>
 </div>
