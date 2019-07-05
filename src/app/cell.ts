@@ -12,7 +12,8 @@ export enum HighlightLevel {
     NO_HIGHLIGHT = 1,
     SELECTED = 2,
     GHOST_SELECTED = 3,
-    GREYED_OUT = 4
+    GREYED_OUT = 4,
+    HIGHLIGHTED = 5
 }
 
 export function notHighlight(highlightLevel: HighlightLevel): HighlightLevel {

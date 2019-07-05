@@ -1,6 +1,6 @@
 
 <div class="cell" (click)="clickCell()" 
-    [ngClass]="{selected: cell.selected === highlightLevel().SELECTED,
+    [ngClass]="{selected: cell.selected === highlightLevel().SELECTED || cell.selected === highlightLevel().HIGHLIGHTED,
         ghost_selected: cell.selected === highlightLevel().GHOST_SELECTED}">
 
     <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>

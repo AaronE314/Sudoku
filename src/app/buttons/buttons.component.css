@@ -33,11 +33,13 @@ div.selected {
     background-color: #2196f3;
 }
 
+div.image:hover,
 div.button:hover {
     color: #607D8B;
     background-color: rgb(235, 235, 235);
 }
 
+div.image.selected:hover,
 div.button.selected:hover {
     color: #ffffff;
     background-color: rgb(74, 175, 238);

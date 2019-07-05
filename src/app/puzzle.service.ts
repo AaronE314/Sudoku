@@ -53,6 +53,21 @@ export class PuzzleService {
       return notes;
     };
 
+    let s = '';
+    for (let i = 1; i <= puzzleString[1].length; i++) {
+      s += puzzleString[1][i - 1];
+
+      if (i !== 0 && i % 9 === 0 ) {
+        s += '\n';
+      } else if (i !== 0 && i % 3 === 0) {
+        s += ' ';
+      }
+      if (i !== 0 && i % 27 === 0 ) {
+        s += '\n';
+      }
+    }
+    console.log(s);
+
 
     for (let i = 0; i < 9; i++) {
       this.puzzle.push([]);
@@ -88,6 +103,22 @@ export class PuzzleService {
 
       }
     }
+  }
+
+  checkWin(): boolean {
+
+    for (let i = 0; i < this.puzzle.length; i++) {
+      for (let j = 0; j < this.puzzle[i].length; j++) {
+
+        if ( this.puzzle[i][j].value === 0 || this.puzzle[i][j].value !== this.solution[i][j].value) {
+          return false;
+        }
+      }
+    }
+
+    console.log('You Win!');
+    return true;
+
   }
 
   getPuzzle(): Cell[][] {
@@ -139,40 +170,24 @@ export class PuzzleService {
       }
     }
 
-    if (this.puzzle[i][j].value !== 0) {
+    if (this.puzzle[i][j].value !== 0 && selected === HighlightLevel.SELECTED) {
       for (const row of this.puzzle) {
         for (const cell of row) {
           const value = this.puzzle[i][j].value;
           if (cell.value !== 0 && cell.value === value) {
-            cell.selected = selected;
+            cell.selected = HighlightLevel.HIGHLIGHTED;
           } else if (cell.value === 0 && cell.notes[Math.floor((value - 1) / 3)][(value - 1) % 3]) {
             cell.selected = HighlightLevel.GHOST_SELECTED;
           }
 
         }
       }
-    } else {
-      this.puzzle[i][j].selected = selected;
     }
 
-
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+    this.puzzle[i][j].selected = selected;
 
 
-      console.error(`${operation} failed: ${error.message}`);
-      console.error(error);
 
-      return of(result as T);
-    };
   }
 
 }

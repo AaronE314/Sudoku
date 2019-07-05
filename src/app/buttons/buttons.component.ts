@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PuzzleService } from '../puzzle.service';
-import { Cell } from '../cell';
 
 @Component({
   selector: 'app-buttons',
@@ -21,6 +20,16 @@ export class ButtonsComponent implements OnInit {
       this.buttons.push(i);
     }
 
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  KeyboardEvent(event: KeyboardEvent) {
+
+    if (parseInt(event.key, 10)) {
+      this.clickButton(parseInt(event.key, 10));
+    } else if (event.key.toLowerCase() === 'n') {
+      this.toggleNotes();
+    }
   }
 
   toggleNotes() {
