@@ -46,6 +46,7 @@ export class ButtonsComponent implements OnInit {
       this.puzzleService.toggleNoteToSelectedCell(value);
     } else {
       this.puzzleService.updateSelectedValue(value);
+      this.puzzleService.checkWin();
     }
 
 

@@ -1,9 +1,10 @@
 
 <div class="cell" (click)="clickCell()" 
     [ngClass]="{selected: cell.selected === highlightLevel().SELECTED || cell.selected === highlightLevel().HIGHLIGHTED,
-        ghost_selected: cell.selected === highlightLevel().GHOST_SELECTED}">
+        ghost_selected: cell.selected === highlightLevel().GHOST_SELECTED,
+        default: cell.default}">
 
-    <p class="unselectable" *ngIf="cell.value !== 0">{{ cell.value }}</p>
+    <p class="unselectable" *ngIf="cell.value !== 0" [ngClass]="{invalid: cell.status === status().INCORRECT}">{{ cell.value }}</p>
     <table class="notesgrid" *ngIf="cell.value === 0">
         <tr *ngFor="let row of cell.notes; let i = index" [attr.data-index] = 'i'>
             <td class="notesgridCell" *ngFor="let note of row; let j = index" [attr.data-index] = 'j'>{{(note) ? (i * 3) + j + 1 : ' '}}</td>

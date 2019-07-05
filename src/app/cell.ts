@@ -6,14 +6,21 @@ export class Cell {
     notes: boolean[][];
     default: boolean;
     selected: HighlightLevel;
+    status: Status;
+}
+
+export enum Status {
+    NORMAL,
+    INCORRECT
+
 }
 
 export enum HighlightLevel {
-    NO_HIGHLIGHT = 1,
-    SELECTED = 2,
-    GHOST_SELECTED = 3,
-    GREYED_OUT = 4,
-    HIGHLIGHTED = 5
+    NO_HIGHLIGHT,
+    SELECTED,
+    GHOST_SELECTED,
+    GREYED_OUT,
+    HIGHLIGHTED
 }
 
 export function notHighlight(highlightLevel: HighlightLevel): HighlightLevel {

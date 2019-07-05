@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cell, HighlightLevel } from './cell';
+import { Cell, HighlightLevel, Status } from './cell';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
@@ -79,7 +79,8 @@ export class PuzzleService {
           value: (puzzleString[0][i * 9 + j] === '.') ? 0 : +puzzleString[0][i * 9 + j],
           notes: createNotes(),
           default: (puzzleString[0][i * 9 + j] === '.' ? false : true),
-          selected: HighlightLevel.NO_HIGHLIGHT
+          selected: HighlightLevel.NO_HIGHLIGHT,
+          status: Status.NORMAL
         });
         this.solution[i].push({
           i,
@@ -87,7 +88,8 @@ export class PuzzleService {
           value: +puzzleString[1][i * 9 + j],
           notes: createNotes(),
           default: true,
-          selected: HighlightLevel.NO_HIGHLIGHT
+          selected: HighlightLevel.NO_HIGHLIGHT,
+          status: Status.NORMAL
         });
       }
     }
@@ -121,6 +123,58 @@ export class PuzzleService {
 
   }
 
+  validatePuzzle(): void {
+
+    for (const row of this.puzzle) {
+      for (const cell of row) {
+
+        if (!this.validateBox(cell) || !this.validateCol(cell) || !this.validateRow(cell)) {
+          cell.status = Status.INCORRECT;
+        } else {
+          cell.status = Status.NORMAL;
+        }
+      }
+    }
+
+  }
+
+  validateBox(cell: Cell): boolean {
+
+    const row = Math.floor((cell.i / 3)) * 3;
+    const col = Math.floor((cell.j / 3)) * 3;
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.puzzle[row + i][col + j] !== cell && this.puzzle[row + i][col + j].value === cell.value) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+
+  }
+
+  validateRow(cell: Cell): boolean {
+    for (let row = 0; row < this.puzzle.length; row++) {
+      if (this.puzzle[cell.i][row] !== cell && this.puzzle[cell.i][row].value === cell.value) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  validateCol(cell: Cell): boolean {
+
+    for (const col of this.puzzle) {
+      if (col[cell.j] !== cell && col[cell.j].value === cell.value) {
+        return false;
+      }
+    }
+    return true;
+
+  }
+
   getPuzzle(): Cell[][] {
     return this.puzzle;
   }
@@ -136,6 +190,7 @@ export class PuzzleService {
     if (cell) {
       cell.value = (value === cell.value) ? 0 : value;
 
+      this.validatePuzzle();
       this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 

@@ -9,6 +9,10 @@ div.cell {
     background-color: #ffffff;
 }
 
+div.cell.default {
+    font-weight: bold;
+}
+
 div.selected {
     border: 2px solid green;
     height: 46px;
@@ -56,6 +60,10 @@ p {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+}
+
+p.invalid {
+    color: red;
 }
 
 .unselectable {
