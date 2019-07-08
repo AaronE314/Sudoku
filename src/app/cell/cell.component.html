@@ -2,12 +2,13 @@
 <div class="cell" (click)="clickCell()" 
     [ngClass]="{selected: cell.selected === highlightLevel().SELECTED || cell.selected === highlightLevel().HIGHLIGHTED,
         ghost_selected: cell.selected === highlightLevel().GHOST_SELECTED,
+        grayed_out: cell.greyedOut,
         default: cell.default}">
 
     <p class="unselectable" *ngIf="cell.value !== 0" [ngClass]="{invalid: cell.status === status().INCORRECT}">{{ cell.value }}</p>
-    <table class="notesgrid" *ngIf="cell.value === 0">
-        <tr *ngFor="let row of cell.notes; let i = index" [attr.data-index] = 'i'>
-            <td class="notesgridCell" *ngFor="let note of row; let j = index" [attr.data-index] = 'j'>{{(note) ? (i * 3) + j + 1 : ' '}}</td>
+    <table class="unselectable" class="notesgrid" *ngIf="cell.value === 0">
+        <tr class="unselectable" *ngFor="let row of cell.notes; let i = index" [attr.data-index] = 'i'>
+            <td class="unselectable" class="notesgridCell" *ngFor="let note of row; let j = index" [attr.data-index] = 'j'>{{(note) ? (i * 3) + j + 1 : ' '}}</td>
         </tr>
     </table>
 </div>

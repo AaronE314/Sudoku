@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Cell, HighlightLevel, Status } from './cell';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -23,7 +21,7 @@ export class PuzzleService {
   ) { }
 
   loadPuzzle(): void {
-    this.http.get('./assets/puzzles.csv', { responseType: 'text' })
+    this.http.get('./assets/puzzles/easy.csv', { responseType: 'text' })
       .subscribe(
         data => {
           this.fullData = data.split('\n');
@@ -80,6 +78,7 @@ export class PuzzleService {
           notes: createNotes(),
           default: (puzzleString[0][i * 9 + j] === '.' ? false : true),
           selected: HighlightLevel.NO_HIGHLIGHT,
+          greyedOut: false,
           status: Status.NORMAL
         });
         this.solution[i].push({
@@ -89,6 +88,7 @@ export class PuzzleService {
           notes: createNotes(),
           default: true,
           selected: HighlightLevel.NO_HIGHLIGHT,
+          greyedOut: false,
           status: Status.NORMAL
         });
       }
@@ -103,6 +103,19 @@ export class PuzzleService {
           return cell;
         }
 
+      }
+    }
+  }
+
+  shiftSelected(up: number, right: number) {
+    for (const row of this.puzzle) {
+      for (const cell of row) {
+        if (cell.selected === HighlightLevel.SELECTED) {
+          if (cell.i + up >= 0 && cell.i + up < 9 && cell.j + right >= 0 && cell.j + right < 9) {
+            this.updateCellSelected(cell.i + up, cell.j + right, HighlightLevel.SELECTED);
+            return;
+          }
+        }
       }
     }
   }
@@ -138,15 +151,18 @@ export class PuzzleService {
 
   }
 
-  validateBox(cell: Cell): boolean {
+  validateBox(cell: Cell, highlight: boolean = false): boolean {
 
     const row = Math.floor((cell.i / 3)) * 3;
     const col = Math.floor((cell.j / 3)) * 3;
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (this.puzzle[row + i][col + j] !== cell && this.puzzle[row + i][col + j].value === cell.value) {
+        if (!highlight && this.puzzle[row + i][col + j] !== cell && this.puzzle[row + i][col + j].value === cell.value) {
           return false;
+        }
+        if (highlight) {
+          this.puzzle[row + i][col + j].greyedOut = true;
         }
       }
     }
@@ -155,20 +171,26 @@ export class PuzzleService {
 
   }
 
-  validateRow(cell: Cell): boolean {
+  validateRow(cell: Cell, highlight: boolean = false): boolean {
     for (let row = 0; row < this.puzzle.length; row++) {
-      if (this.puzzle[cell.i][row] !== cell && this.puzzle[cell.i][row].value === cell.value) {
+      if (!highlight && this.puzzle[cell.i][row] !== cell && this.puzzle[cell.i][row].value === cell.value) {
         return false;
+      }
+      if (highlight) {
+        this.puzzle[cell.i][row].greyedOut = true;
       }
     }
     return true;
   }
 
-  validateCol(cell: Cell): boolean {
+  validateCol(cell: Cell, highlight: boolean = false): boolean {
 
     for (const col of this.puzzle) {
-      if (col[cell.j] !== cell && col[cell.j].value === cell.value) {
+      if (!highlight && col[cell.j] !== cell && col[cell.j].value === cell.value) {
         return false;
+      }
+      if (highlight) {
+        col[cell.j].greyedOut = true;
       }
     }
     return true;
@@ -222,6 +244,7 @@ export class PuzzleService {
     for (const row of this.puzzle) {
       for (const cell of row) {
         cell.selected = HighlightLevel.NO_HIGHLIGHT;
+        cell.greyedOut = false;
       }
     }
 
@@ -234,15 +257,17 @@ export class PuzzleService {
           } else if (cell.value === 0 && cell.notes[Math.floor((value - 1) / 3)][(value - 1) % 3]) {
             cell.selected = HighlightLevel.GHOST_SELECTED;
           }
-
         }
       }
     }
 
     this.puzzle[i][j].selected = selected;
 
-
-
+    if (selected === HighlightLevel.SELECTED) {
+      this.validateBox(this.puzzle[i][j], true);
+      this.validateCol(this.puzzle[i][j], true);
+      this.validateRow(this.puzzle[i][j], true);
+    }
   }
 
 }

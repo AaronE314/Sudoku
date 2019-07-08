@@ -6,6 +6,7 @@ export class Cell {
     notes: boolean[][];
     default: boolean;
     selected: HighlightLevel;
+    greyedOut: boolean;
     status: Status;
 }
 
@@ -19,7 +20,6 @@ export enum HighlightLevel {
     NO_HIGHLIGHT,
     SELECTED,
     GHOST_SELECTED,
-    GREYED_OUT,
     HIGHLIGHTED
 }
 
@@ -29,7 +29,6 @@ export function notHighlight(highlightLevel: HighlightLevel): HighlightLevel {
         case HighlightLevel.NO_HIGHLIGHT:
             return HighlightLevel.SELECTED;
         case HighlightLevel.GHOST_SELECTED:
-        case HighlightLevel.GREYED_OUT:
         case HighlightLevel.SELECTED:
             return HighlightLevel.NO_HIGHLIGHT;
         default:

@@ -27,8 +27,28 @@ export class ButtonsComponent implements OnInit {
 
     if (parseInt(event.key, 10)) {
       this.clickButton(parseInt(event.key, 10));
-    } else if (event.key.toLowerCase() === 'n') {
-      this.toggleNotes();
+    } else {
+      switch (event.key.toLowerCase()) {
+        case 'n':
+          this.toggleNotes();
+          break;
+        case 'w':
+        case 'arrowup':
+          this.puzzleService.shiftSelected(-1, 0);
+          break;
+        case 'a':
+        case 'arrowleft':
+          this.puzzleService.shiftSelected(0, -1);
+          break;
+        case 'd':
+        case 'arrowright':
+          this.puzzleService.shiftSelected(0, 1);
+          break;
+        case 's':
+        case 'arrowdown':
+          this.puzzleService.shiftSelected(1, 0);
+          break;
+    }
     }
   }
 
@@ -48,8 +68,6 @@ export class ButtonsComponent implements OnInit {
       this.puzzleService.updateSelectedValue(value);
       this.puzzleService.checkWin();
     }
-
-
   }
 
 }
