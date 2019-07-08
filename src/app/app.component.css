@@ -1,0 +1,80 @@
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 40%;
+    background-color: rgba(221, 221, 221, 0.8);
+    box-shadow: 0 0 5px 10px rgba(221, 221, 221, 0.8);
+    border-color: rgba(221, 221, 221, 0.8);
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+}
+
+.fullWidth {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255,255,255,0.6);
+    transition:400ms ease all;
+}
+
+.fullWidth::before {
+    filter: blur(2px);
+}
+
+.text {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+p {
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button{
+    background:rgb(170, 170, 170);
+    color:#fff;
+    border:none;
+    position:relative;
+    width: 150px;
+    height:30px;
+    font-size:1em;
+    padding:1 2em;
+    margin: 2px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+button:hover{
+    background:#fff;
+    color:green;/* #1AAB8A;*/
+}
+button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: green;/* #1AAB8A;*/
+    transition:400ms ease all;
+}
+button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
