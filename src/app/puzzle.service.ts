@@ -101,9 +101,8 @@ export class PuzzleService {
   }
 
   newGame(): void {
-    this.puzzle = [];
+    this.puzzle.length = 0;
     this.getRandomPuzzle();
-    console.log(this.puzzle);
   }
 
   getSelected(): Cell {
