@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Cell, HighlightLevel, Status } from './cell';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +63,6 @@ export class PuzzleService {
     }
     console.log(s);
 
-
     for (let i = 0; i < 9; i++) {
       this.puzzle.push([]);
       this.solution.push([]);
@@ -93,6 +89,20 @@ export class PuzzleService {
         });
       }
     }
+  }
+
+  cheat() {
+
+    for (let i = 0; i < this.puzzle.length; i++) {
+      for (let j = 0; j < this.puzzle[i].length; j++) {
+        this.puzzle[i][j].value = this.solution[i][j].value;
+      }
+    }
+  }
+
+  newGame(): void {
+    this.puzzle.length = 0;
+    this.getRandomPuzzle();
   }
 
   getSelected(): Cell {
@@ -130,8 +140,6 @@ export class PuzzleService {
         }
       }
     }
-
-    console.log('You Win!');
     return true;
 
   }

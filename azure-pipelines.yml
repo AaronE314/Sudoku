@@ -36,6 +36,3 @@ steps:
     git config --global --add url."git@github.com:".insteadOf "https://github.com/"
     ngh --dir dist/sudoku -S --name "Aaron Exley" --email "aaronde314@gmail.com"
   displayName: '"deploy to GitHub Pages'
-  condition: |
-    and(not(eq(variables['Build.Reason'], 'PullRequest')),
-        eq(variables['Build.SourceBranch'], 'refs/heads/master'))
