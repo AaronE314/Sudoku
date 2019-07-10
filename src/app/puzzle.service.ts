@@ -75,6 +75,7 @@ export class PuzzleService {
       }
     }
     console.log(s);
+    localStorage.setItem('solution', s);
 
     for (let i = 0; i < 9; i++) {
       this.puzzle.push([]);
