@@ -21,7 +21,6 @@ export class BoardComponent implements OnInit {
   }
 
   getGrid(): Cell[][] {
-    this.grid = this.puzzleService.getPuzzle();
-    return this.grid;
+    return this.puzzleService.getPuzzle();
   }
 }

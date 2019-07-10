@@ -175,15 +175,20 @@ export class PuzzleService {
 
   checkWin(): boolean {
 
-    for (let i = 0; i < this.puzzle.length; i++) {
-      for (let j = 0; j < this.puzzle[i].length; j++) {
+    if (this.puzzle.length > 0) {
 
-        if ( this.puzzle[i][j].value === 0 || this.puzzle[i][j].value !== this.solution[i][j].value) {
-          return false;
+      for (let i = 0; i < this.puzzle.length; i++) {
+        for (let j = 0; j < this.puzzle[i].length; j++) {
+
+          if ( this.puzzle[i][j].value === 0 || this.puzzle[i][j].value !== this.solution[i][j].value) {
+            return false;
+          }
         }
       }
+      return true;
     }
-    return true;
+
+    return false;
 
   }
 
