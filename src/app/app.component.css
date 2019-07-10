@@ -12,6 +12,10 @@
     transform: translate(-50%, -50%);
 }
 
+h1 {
+    margin-bottom: 10px;
+}
+
 .fullWidth {
     top: 0;
     left: 0;
@@ -39,6 +43,16 @@ p {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.menu {
+    margin-bottom: 20px;
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 100px;
+    height:20px;
+    display: inline-grid;
+}
+
 button{
     background:rgb(170, 170, 170);
     color:#fff;
@@ -50,8 +64,8 @@ button{
     padding:1 2em;
     margin: 2px;
     cursor:pointer;
-    transition:800ms ease all;
     outline:none;
+    margin-bottom: 10px;
 }
 button:hover{
     background:#fff;

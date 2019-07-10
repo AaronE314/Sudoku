@@ -15,7 +15,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.puzzleService.loadPuzzle();
+    this.puzzleService.loadPuzzle('easy');
 
     this.grid = this.puzzleService.getPuzzle();
 

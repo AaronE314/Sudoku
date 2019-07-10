@@ -16,8 +16,13 @@ export class PuzzleService {
     private http: HttpClient
   ) { }
 
-  loadPuzzle(): void {
-    this.http.get('./assets/puzzles/easy.csv', { responseType: 'text' })
+  /**
+   * 
+   * @param diff the difficulty of the puzzle
+   *             simple, easy, intermediate, expert
+   */
+  loadPuzzle(diff: string): void {
+    this.http.get(`./assets/puzzles/${diff}.csv`, { responseType: 'text' })
       .subscribe(
         data => {
           this.fullData = data.split('\n');
