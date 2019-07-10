@@ -18,6 +18,10 @@ export class BoardComponent implements OnInit {
     this.puzzleService.loadPuzzle('easy');
 
     this.grid = this.puzzleService.getPuzzle();
+  }
 
+  getGrid(): Cell[][] {
+    this.grid = this.puzzleService.getPuzzle();
+    return this.grid;
   }
 }

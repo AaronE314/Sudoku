@@ -10,25 +10,8 @@ import { PuzzleService } from './puzzle.service';
 export class AppComponent {
 
   title = 'sudoku';
-  timeLeft: number = 60;
-  interval: any;
 
   constructor(private puzzleService: PuzzleService) {}
-
-
-  startTimer() {
-      this.interval = setInterval(() => {
-        if(this.timeLeft > 0) {
-          this.timeLeft--;
-        } else {
-          this.timeLeft = 60;
-        }
-      },1000)
-    }
-
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
 
   checkWin(): boolean {
     return this.puzzleService.checkWin();
@@ -36,7 +19,6 @@ export class AppComponent {
 
   newGame(): void {
     this.puzzleService.newGame();
-    this.startTimer();
   }
 
   cheat(): void {
@@ -48,7 +30,7 @@ export class AppComponent {
   }
 
   settings(): void {
-    // TODO: ADD DIFFICUTLY
+    // TODO: ADD Settings
   }
 
 }

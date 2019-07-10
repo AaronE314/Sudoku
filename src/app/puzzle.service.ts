@@ -17,17 +17,25 @@ export class PuzzleService {
   ) { }
 
   /**
-   * 
    * @param diff the difficulty of the puzzle
    *             simple, easy, intermediate, expert
    */
   loadPuzzle(diff: string): void {
+
     this.http.get(`./assets/puzzles/${diff}.csv`, { responseType: 'text' })
       .subscribe(
         data => {
           this.fullData = data.split('\n');
           this.fullData.shift();
-          this.getRandomPuzzle();
+
+          const puzzle = localStorage.getItem('puzzle');
+          if (puzzle && puzzle !== '' ) {
+            this.puzzle = JSON.parse(localStorage.getItem('puzzle'));
+            this.solution = JSON.parse(localStorage.getItem('puzzleSolution'));
+          } else {
+            this.getRandomPuzzle();
+            this.savePuzzle();
+          }
         },
         error => {
           console.log(error);
@@ -94,6 +102,12 @@ export class PuzzleService {
         });
       }
     }
+
+  }
+
+  savePuzzle(): void {
+    localStorage.setItem('puzzle', JSON.stringify(this.puzzle));
+    localStorage.setItem('puzzleSolution', JSON.stringify(this.solution));
   }
 
   cheat() {
@@ -108,6 +122,7 @@ export class PuzzleService {
   newGame(): void {
     this.puzzle.length = 0;
     this.getRandomPuzzle();
+    this.savePuzzle();
   }
 
   getSelected(): Cell {
@@ -229,6 +244,8 @@ export class PuzzleService {
       this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 
+    this.savePuzzle();
+
   }
 
   toggleNoteToSelectedCell(value: number) {
@@ -243,13 +260,17 @@ export class PuzzleService {
       this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 
+    this.savePuzzle();
+
   }
   updateCellValue(i: number, j: number, value: number): void {
     this.puzzle[i][j].value = value;
+    this.savePuzzle();
   }
 
   updateCellNotes(i: number, j: number, notes: boolean[][]): void {
     this.puzzle[i][j].notes = notes;
+    this.savePuzzle();
   }
 
   updateCellSelected(i: number, j: number, selected: HighlightLevel): void {
