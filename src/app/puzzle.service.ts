@@ -106,6 +106,27 @@ export class PuzzleService {
 
   }
 
+  printPuzzle(puzzle: Cell[][]) {
+
+    if (puzzle.length > 0) {
+      let s = '';
+      for (let i = 0; i < puzzle.length; i++) {
+        for (let j = 0; j < puzzle[i].length; j++) {
+          s += puzzle[i][j].value;
+
+          if ((j + 1) % 3 === 0) {
+            s += ' ';
+          }
+        }
+        s += '\n';
+        if ((i + 1) % 3 === 0 ) {
+          s += '\n';
+        }
+      }
+      console.log(s);
+    }
+  }
+
   savePuzzle(): void {
     localStorage.setItem('puzzle', JSON.stringify(this.puzzle));
     localStorage.setItem('puzzleSolution', JSON.stringify(this.solution));
@@ -122,6 +143,7 @@ export class PuzzleService {
 
   newGame(): void {
     this.puzzle.length = 0;
+    this.solution.length = 0;
     this.getRandomPuzzle();
     this.savePuzzle();
   }
