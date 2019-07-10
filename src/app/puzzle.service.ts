@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cell, HighlightLevel, Status } from './cell';
 import { HttpClient } from '@angular/common/http';
-import {generator} from './sudoku.js';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +31,6 @@ export class PuzzleService {
   }
 
   getRandomPuzzle() {
-
-    // console.log(generator.generate('easy'));
 
     let puzzleText: string = this.fullData[Math.floor(Math.random() * this.fullData.length)];
     puzzleText = puzzleText.replace(/,\s*$/, '');
