@@ -1,0 +1,25 @@
+
+
+<div align='center'>
+    <h1>Sudoku</h1>
+    <button class='menu' (click)="newGame()">New Game</button>
+    <!-- <label class='menu'>{{timeLeft}}</label> -->
+    <button class='menu' routerLink='/settings'>Settings</button>
+  </div>
+  
+  <app-board></app-board>
+  <app-buttons align='center'></app-buttons>
+  
+  <!-- <button (click)="cheat()">cheat</button> -->
+  
+  <div class='fullWidth' *ngIf="checkWin()">
+      <div class='centered'>
+        
+        <div class='text' align='center'>
+          <p>You Win!!</p>
+          <button (click)="newGame()">New Game</button>
+          <button (click)="changeDifficulty()">Change Difficulty</button>
+        </div>
+      </div>
+  </div>
+  

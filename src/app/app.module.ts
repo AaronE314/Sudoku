@@ -7,6 +7,8 @@ import { CellComponent } from './cell/cell.component';
 import { HttpClientModule  } from '@angular/common/http';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { BoardComponent } from './board/board.component';
+import { SettingsComponent } from './settings/settings.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { BoardComponent } from './board/board.component';
     CellComponent,
     ButtonsComponent,
     BoardComponent,
+    SettingsComponent,
+    PuzzleComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,26 +11,5 @@ export class AppComponent {
 
   title = 'sudoku';
 
-  constructor(private puzzleService: PuzzleService) {}
-
-  checkWin(): boolean {
-    return this.puzzleService.checkWin();
-  }
-
-  newGame(): void {
-    this.puzzleService.newGame();
-  }
-
-  cheat(): void {
-    this.puzzleService.cheat();
-  }
-
-  changeDifficulty(): void {
-    // TODO: ADD DIFFICUTLY
-  }
-
-  settings(): void {
-    // TODO: ADD Settings
-  }
-
+  constructor() {}
 }

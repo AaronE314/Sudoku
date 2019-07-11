@@ -1,0 +1,32 @@
+
+<div align='center'>
+    <h1>Settings</h1>
+        <div class='box'>
+            <button class='menu' (click)="save()">Save</button>
+            <button class='menu' (click)="goBack()">Cancel</button><br>
+        </div>
+        <h3>Difficulty</h3>
+        <div class='box'>
+            
+            <select>
+                    <option value="Simple">Simple</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+            </select>
+        </div>
+        <h3>Other Options</h3>
+        <div class='box'>
+                <label class="container" align='center' *ngFor="let option of options">{{option.text}}
+                    <input type="checkbox"
+                            checked="checked"
+                            name="options"
+                            value="{{option.value}}"
+                            [checked]="option.checked"
+                            (change)="option.checked = !option.checked">
+                    <span class="checkmark"></span>
+                </label>
+        </div>
+
+</div>
+
