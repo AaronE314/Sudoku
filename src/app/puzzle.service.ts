@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Cell, HighlightLevel, Status } from './cell';
 import { HttpClient } from '@angular/common/http';
+import { SettingsService } from './settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,21 @@ export class PuzzleService {
   private fullData: string[] = [];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private settings: SettingsService
   ) { }
 
   /**
    * @param diff the difficulty of the puzzle
    *             simple, easy, intermediate, expert
    */
-  loadPuzzle(diff: string): void {
+  loadPuzzle(): void {
 
-    this.http.get(`./assets/puzzles/${diff}.csv`, { responseType: 'text' })
+    if (!this.settings.isSet(this.settings.keys.difficulty)) {
+      this.settings.setDefault();
+    }
+
+    this.http.get(`./assets/puzzles/${this.settings.getSetting(this.settings.keys.difficulty)}.csv`, { responseType: 'text' })
       .subscribe(
         data => {
           this.fullData = data.split('\n');
@@ -33,8 +39,7 @@ export class PuzzleService {
             this.puzzle = JSON.parse(localStorage.getItem('puzzle'));
             this.solution = JSON.parse(localStorage.getItem('puzzleSolution'));
           } else {
-            this.getRandomPuzzle();
-            this.savePuzzle();
+            this.newGame();
           }
         },
         error => {
@@ -145,13 +150,15 @@ export class PuzzleService {
     this.puzzle.length = 0;
     this.solution.length = 0;
     this.getRandomPuzzle();
+    if (this.settings.getSetting(this.settings.keys.fill_notes) === 'true') {
+      this.autoFillNotes();
+    }
     this.savePuzzle();
   }
 
   getSelected(): Cell {
     for (const row of this.puzzle) {
       for (const cell of row) {
-
         if (!cell.default && cell.selected === HighlightLevel.SELECTED) {
           return cell;
         }
@@ -189,6 +196,76 @@ export class PuzzleService {
     }
 
     return false;
+
+  }
+
+  autoFillNotes(): void {
+    for (let i = 0; i < 9;  i++) {
+      for (const row of this.puzzle) {
+        for (const cell of row) {
+          if (!cell.default && this.checkValue(cell, i + 1)) {
+            cell.notes[Math.floor(i / 3)][ i % 3] = true;
+          }
+        }
+      }
+    }
+  }
+
+  autoRemoveNotes(cell: Cell): void {
+
+    const row = Math.floor((cell.i / 3)) * 3;
+    const col = Math.floor((cell.j / 3)) * 3;
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.puzzle[row + i][col + j] !== cell &&
+          this.puzzle[row + i][col + j].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3]) {
+          this.puzzle[row + i][col + j].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3] = false;
+        }
+      }
+    }
+
+    for (let i = 0; i < this.puzzle.length; i++) {
+      if (this.puzzle[cell.i][i] !== cell &&
+        this.puzzle[cell.i][i].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3]) {
+        this.puzzle[cell.i][i].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3] = false;
+      }
+    }
+
+    for (const i of this.puzzle) {
+      if (i[cell.j] !== cell &&
+        i[cell.j].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3]) {
+        i[cell.j].notes[Math.floor((cell.value - 1) / 3)][(cell.value - 1) % 3] = false;
+      }
+    }
+  }
+
+  checkValue(cell: Cell, value: number): boolean {
+
+    const row = Math.floor((cell.i / 3)) * 3;
+    const col = Math.floor((cell.j / 3)) * 3;
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.puzzle[row + i][col + j] !== cell && this.puzzle[row + i][col + j].value === value) {
+          return false;
+        }
+      }
+    }
+
+    for (let i = 0; i < this.puzzle.length; i++) {
+      if (this.puzzle[cell.i][i] !== cell && this.puzzle[cell.i][i].value === value) {
+        return false;
+      }
+    }
+
+    for (const i of this.puzzle) {
+      if (i[cell.j] !== cell && i[cell.j].value === value) {
+        return false;
+      }
+    }
+
+    return true;
 
   }
 
@@ -269,6 +346,10 @@ export class PuzzleService {
       cell.value = (value === cell.value) ? 0 : value;
 
       this.validatePuzzle();
+
+      if (cell.status === Status.NORMAL && this.settings.getSetting(this.settings.keys.remove_notes) === 'true') {
+        this.autoRemoveNotes(cell);
+      }
       this.updateCellSelected(cell.i, cell.j, HighlightLevel.SELECTED);
     }
 

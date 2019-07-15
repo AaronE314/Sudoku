@@ -11,7 +11,7 @@ export class PuzzleComponent implements OnInit {
   constructor(private puzzleService: PuzzleService) { }
 
   ngOnInit() {
-    this.puzzleService.loadPuzzle('easy');
+    this.puzzleService.loadPuzzle();
   }
 
   checkWin(): boolean {
