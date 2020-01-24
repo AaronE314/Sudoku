@@ -17,17 +17,17 @@ td {
 }
 
 td:first-child {
-    border-left: solid;
+    border-left: 2px solid;
 }
 
 td:nth-child(3n) {
-    border-right: solid;
+    border-right: 2px solid;
 }
 
 tr:first-child {
-    border-top: solid;
+    border-top: 2px solid;
 }
 
 tr:nth-child(3n) {
-    border-bottom: solid;
+    border-bottom: 2px solid;
 }
